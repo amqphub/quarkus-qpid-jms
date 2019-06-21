@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2019 the original author or authors.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.amqphub.quarkus</groupId>
+  <artifactId>amqp-10-jms-quarkus-qpid-jms-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <name>AMQP 1.0 JMS - Quarkus Qpid JMS - Parent</name>
+  <packaging>pom</packaging>
+
+  <properties>
+    <quarkus.version>0.17.0</quarkus.version>
+    <!-- TODO: update to release when available, remove snapshot repo definition -->
+    <qpid-jms.version>0.44.0-SNAPSHOT</qpid-jms.version>
+
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <repositories>
+    <!-- Only required until new client release is available -->
+    <repository>
+      <id>apache-snapshots-repo</id>
+      <url>https://repository.apache.org/content/repositories/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <modules>
+    <module>deployment</module>
+    <module>runtime</module>
+
+    <module>helloworld</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.qpid</groupId>
+        <artifactId>qpid-jms-client</artifactId>
+        <version>${qpid-jms.version}</version>
+      </dependency>
+
+      <!-- Internal modules -->
+      <dependency>
+        <groupId>org.amqphub.quarkus</groupId>
+        <artifactId>amqp-10-jms-quarkus-qpid-jms</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <!-- Quarkus Build Parent / BOM -->
+      <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-build-parent</artifactId>
+        <version>${quarkus.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>
