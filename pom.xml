@@ -28,28 +28,13 @@
 
   <properties>
     <quarkus.version>0.18.0</quarkus.version>
-    <!-- TODO: update to release when available, remove snapshot repo definition -->
-    <qpid-jms.version>0.44.0-SNAPSHOT</qpid-jms.version>
+    <qpid-jms.version>0.44.0</qpid-jms.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <supported-maven-versions>[3.5.3,)</supported-maven-versions>
   </properties>
-
-  <repositories>
-    <!-- Only required until new client release is available -->
-    <repository>
-      <id>apache-snapshots-repo</id>
-      <url>https://repository.apache.org/content/repositories/snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
 
   <modules>
     <module>deployment</module>
