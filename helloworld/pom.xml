@@ -23,7 +23,7 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <properties>
-    <quarkus.version>0.18.0</quarkus.version>
+    <quarkus.version>0.19.1</quarkus.version>
     <quarkus-qpid-jms.version>0.0.1-SNAPSHOT</quarkus-qpid-jms.version>
 
     <maven.compiler.target>1.8</maven.compiler.target>

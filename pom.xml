@@ -27,7 +27,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <quarkus.version>0.18.0</quarkus.version>
+    <quarkus.version>0.19.1</quarkus.version>
     <qpid-jms.version>0.44.0</qpid-jms.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
