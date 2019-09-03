@@ -35,6 +35,10 @@ import org.apache.qpid.jms.sasl.ScramSHA256Mechanism;
 import org.apache.qpid.jms.sasl.ScramSHA256MechanismFactory;
 import org.apache.qpid.jms.sasl.XOauth2Mechanism;
 import org.apache.qpid.jms.sasl.XOauth2MechanismFactory;
+import org.apache.qpid.jms.tracing.JmsNoOpTracer;
+import org.apache.qpid.jms.tracing.JmsNoOpTracerFactory;
+import org.apache.qpid.jms.tracing.opentracing.OpenTracingTracer;
+import org.apache.qpid.jms.tracing.opentracing.OpenTracingTracerFactory;
 import org.apache.qpid.jms.transports.TransportOptions;
 import org.apache.qpid.jms.transports.netty.NettySslTransportFactory;
 import org.apache.qpid.jms.transports.netty.NettyTcpTransport;
@@ -72,6 +76,7 @@ public class QpidJmsProcessor {
                       BuildProducer<RuntimeInitializedClassBuildItem> delayedInitialisation,
                       BuildProducer<SubstrateResourceBuildItem> resource) {
 
+        // Delay initialisation of proton-j transport to allows protocol tracing with PN_TRACE_FRM
         delayedInitialisation.produce(new RuntimeInitializedClassBuildItem(TransportImpl.class.getName()));
 
         // Provider impls
@@ -136,5 +141,14 @@ public class QpidJmsProcessor {
         resource.produce(new SubstrateResourceBuildItem("META-INF/services/org/apache/qpid/jms/sasl/XOAUTH2"));
         reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, XOauth2MechanismFactory.class.getName()));
         reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, XOauth2Mechanism.class.getName()));
+
+        // Tracing
+        resource.produce(new SubstrateResourceBuildItem("META-INF/services/org/apache/qpid/jms/tracing/noop"));
+        reflectiveClass.produce(new ReflectiveClassBuildItem(false, false, JmsNoOpTracerFactory.class.getName()));
+        reflectiveClass.produce(new ReflectiveClassBuildItem(false, false, JmsNoOpTracer.class.getName()));
+
+        resource.produce(new SubstrateResourceBuildItem("META-INF/services/org/apache/qpid/jms/tracing/opentracing"));
+        reflectiveClass.produce(new ReflectiveClassBuildItem(false, false, OpenTracingTracerFactory.class.getName()));
+        reflectiveClass.produce(new ReflectiveClassBuildItem(false, false, OpenTracingTracer.class.getName()));
     }
 }
