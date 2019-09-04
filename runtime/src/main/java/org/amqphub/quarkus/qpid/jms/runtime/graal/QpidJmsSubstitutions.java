@@ -30,6 +30,9 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 class QpidJmsSubstitutions {
 }
 
+/**
+ * This substitution disables Netty OpenSSL use and references to its classes
+ */
 @TargetClass(className = "org.apache.qpid.jms.transports.TransportSupport")
 final class Target_org_apache_qpid_jms_transports_TransportSupport {
 
@@ -40,6 +43,9 @@ final class Target_org_apache_qpid_jms_transports_TransportSupport {
     }
 }
 
+/**
+ * This substitution disables Netty KQueue use and references to its classes
+ */
 @TargetClass(className = "org.apache.qpid.jms.transports.netty.KQueueSupport")
 final class Target_org_apache_qpid_jms_transports_netty_KQueueSupport {
 
@@ -62,6 +68,9 @@ final class Target_org_apache_qpid_jms_transports_netty_KQueueSupport {
     }
 }
 
+/**
+ * This substitution disables Netty Epoll use and references to its classes
+ */
 @TargetClass(className = "org.apache.qpid.jms.transports.netty.EpollSupport")
 final class Target_org_apache_qpid_jms_transports_netty_EpollSupport {
 
