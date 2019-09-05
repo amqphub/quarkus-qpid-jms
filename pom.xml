@@ -72,6 +72,13 @@
     </repository>
   </distributionManagement>
 
+  <developers>
+    <developer>
+      <name>Robbie Gemmell</name>
+      <email>robbie.gemmell@gmail.com</email>
+    </developer>
+  </developers>
+
   <modules>
     <module>deployment</module>
     <module>runtime</module>
