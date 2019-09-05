@@ -55,9 +55,9 @@
   </properties>
 
   <scm>
-    <url>https://github.com/amqphub/quarkus-qpid-jms.git</url>
-    <connection>scm:git:git://github.com/amqphub/quarkus-qpid-jms.git</connection>
-    <developerConnection>scm:git:git://github.com/amqphub/quarkus-qpid-jms.git</developerConnection>
+    <url>https://github.com/amqphub/quarkus-qpid-jms</url>
+    <connection>scm:git:https://github.com/amqphub/quarkus-qpid-jms.git</connection>
+    <developerConnection>scm:git:https://github.com/amqphub/quarkus-qpid-jms.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
