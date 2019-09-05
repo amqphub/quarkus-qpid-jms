@@ -45,7 +45,7 @@
     <dependencies>
       <dependency>
         <groupId>org.amqphub.quarkus</groupId>
-        <artifactId>amqp-10-jms-quarkus-qpid-jms</artifactId>
+        <artifactId>quarkus-qpid-jms</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -61,7 +61,7 @@
   <dependencies>
     <dependency>
       <groupId>org.amqphub.quarkus</groupId>
-      <artifactId>amqp-10-jms-quarkus-qpid-jms</artifactId>
+      <artifactId>quarkus-qpid-jms</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

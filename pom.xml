@@ -18,13 +18,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.amqphub.quarkus</groupId>
-  <artifactId>amqp-10-jms-quarkus-qpid-jms-parent</artifactId>
+  <artifactId>quarkus-qpid-jms-parent</artifactId>
   <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>AMQP 1.0 JMS - Quarkus Qpid JMS - Parent</name>
+  <name>Quarkus Qpid JMS - Parent</name>
   <description>Extension allowing use of the AMQP 1.0 Qpid JMS client in a Quarkus application native image build</description>
-  <url>https://github.com/amqphub/amqp-10-jms-quarkus-qpid-jms</url>
+  <url>https://github.com/amqphub/quarkus-qpid-jms</url>
 
   <licenses>
     <license>
@@ -55,9 +55,9 @@
   </properties>
 
   <scm>
-    <url>https://github.com/amqphub/amqp-10-jms-quarkus-qpid-jms.git</url>
-    <connection>scm:git:git://github.com/amqphub/amqp-10-jms-quarkus-qpid-jms.git</connection>
-    <developerConnection>scm:git:git://github.com/amqphub/amqp-10-jms-quarkus-qpid-jms.git</developerConnection>
+    <url>https://github.com/amqphub/quarkus-qpid-jms.git</url>
+    <connection>scm:git:git://github.com/amqphub/quarkus-qpid-jms.git</connection>
+    <developerConnection>scm:git:git://github.com/amqphub/quarkus-qpid-jms.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
@@ -90,7 +90,7 @@
       <!-- Internal modules -->
       <dependency>
         <groupId>org.amqphub.quarkus</groupId>
-        <artifactId>amqp-10-jms-quarkus-qpid-jms</artifactId>
+        <artifactId>quarkus-qpid-jms</artifactId>
         <version>${project.version}</version>
       </dependency>
 

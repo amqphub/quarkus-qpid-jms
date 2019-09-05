@@ -1,4 +1,4 @@
-# AMQP 1.0 JMS - Quarkus Qpid JMS Extension
+# Quarkus Qpid JMS Extension
 
 An extension which allows using the AMQP 1.0 [Apache Qpid JMS](https://qpid.apache.org/components/jms/) client in a [Quarkus](https://quarkus.io) application native image build.
 

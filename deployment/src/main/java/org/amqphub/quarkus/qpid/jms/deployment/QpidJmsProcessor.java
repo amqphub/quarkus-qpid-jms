@@ -67,7 +67,7 @@ public class QpidJmsProcessor {
 
         // Indicates desire for the Native SSL support to be enabled. This actually flags the
         // --enable-all-security-services arg for Graal, enabling various other required bits
-        // such as Mac tht allows getting some SASL mechs working.
+        // such as Mac that also allows getting some SASL mechanisms working below.
         extensionSslNativeSupport.produce(new ExtensionSslNativeSupportBuildItem(QPID_JMS));
     }
 
@@ -76,7 +76,7 @@ public class QpidJmsProcessor {
                       BuildProducer<RuntimeInitializedClassBuildItem> delayedInitialisation,
                       BuildProducer<SubstrateResourceBuildItem> resource) {
 
-        // Delay initialisation of proton-j transport to allows protocol tracing with PN_TRACE_FRM
+        // Delay initialisation of proton-j transport to allow enabling protocol trace with PN_TRACE_FRM env variable
         delayedInitialisation.produce(new RuntimeInitializedClassBuildItem(TransportImpl.class.getName()));
 
         // Provider impls

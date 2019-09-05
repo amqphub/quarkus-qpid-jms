@@ -19,17 +19,17 @@
 
   <parent>
     <groupId>org.amqphub.quarkus</groupId>
-    <artifactId>amqp-10-jms-quarkus-qpid-jms-parent</artifactId>
+    <artifactId>quarkus-qpid-jms-parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>amqp-10-jms-quarkus-qpid-jms-deployment</artifactId>
-  <name>AMQP 1.0 JMS - Quarkus Qpid JMS - Deployment</name>
+  <artifactId>quarkus-qpid-jms-deployment</artifactId>
+  <name>Quarkus Qpid JMS - Deployment</name>
 
   <dependencies>
     <dependency>
       <groupId>org.amqphub.quarkus</groupId>
-      <artifactId>amqp-10-jms-quarkus-qpid-jms</artifactId>
+      <artifactId>quarkus-qpid-jms</artifactId>
     </dependency>
 
     <dependency>
