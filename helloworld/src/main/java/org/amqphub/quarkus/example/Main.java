@@ -38,52 +38,52 @@ import io.quarkus.runtime.StartupEvent;
 @ApplicationScoped
 public class Main {
 
-	@ConfigProperty(name = "connection.uri", defaultValue = "amqp://localhost:5672")
-	String connectionUri;
-	@ConfigProperty(name = "connection.username", defaultValue = "guest")
-	String username;
-	@ConfigProperty(name = "connection.password", defaultValue = "guest")
-	String password;
+    @ConfigProperty(name = "connection.uri", defaultValue = "amqp://localhost:5672")
+    String connectionUri;
+    @ConfigProperty(name = "connection.username", defaultValue = "guest")
+    String username;
+    @ConfigProperty(name = "connection.password", defaultValue = "guest")
+    String password;
 
-	private Connection conn;
+    private Connection conn;
 
-	void onStart(@Observes StartupEvent ev) throws Exception {
-		System.out.println("Starting");
+    void onStart(@Observes StartupEvent ev) throws Exception {
+        System.out.println("Starting");
 
-		final ConnectionFactory fac = new JmsConnectionFactory(connectionUri);
-		conn = fac.createConnection(username, password);
+        final ConnectionFactory fac = new JmsConnectionFactory(connectionUri);
+        conn = fac.createConnection(username, password);
 
-		final Session session = conn.createSession(Session.AUTO_ACKNOWLEDGE);
-		final Destination dest = session.createQueue("examples");
+        final Session session = conn.createSession(Session.AUTO_ACKNOWLEDGE);
+        final Destination dest = session.createQueue("examples");
 
-		final MessageConsumer consumer = session.createConsumer(dest);
-		final MessageProducer producer = session.createProducer(dest);
+        final MessageConsumer consumer = session.createConsumer(dest);
+        final MessageProducer producer = session.createProducer(dest);
 
-		AtomicInteger count = new AtomicInteger();
-		consumer.setMessageListener(msg -> {
-			try {
-				System.out.println("Received message: " + msg.getBody(String.class));
+        AtomicInteger count = new AtomicInteger();
+        consumer.setMessageListener(msg -> {
+            try {
+                System.out.println("Received message: " + msg.getBody(String.class));
 
-				Thread.sleep(1000);
-				System.out.println("Sending next message");
-				TextMessage message = session.createTextMessage("Hello World! " + count.incrementAndGet());
-				producer.send(message, DeliveryMode.NON_PERSISTENT, Message.DEFAULT_PRIORITY, 5000L);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+                Thread.sleep(1000);
+                System.out.println("Sending next message");
+                TextMessage message = session.createTextMessage("Hello World! " + count.incrementAndGet());
+                producer.send(message, DeliveryMode.NON_PERSISTENT, Message.DEFAULT_PRIORITY, 5000L);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
-		System.out.println("Sending first message");
-		TextMessage message = session.createTextMessage("Hello World! " + count.incrementAndGet());
-		producer.send(message, DeliveryMode.NON_PERSISTENT, Message.DEFAULT_PRIORITY, 5000L);
+        System.out.println("Sending first message");
+        TextMessage message = session.createTextMessage("Hello World! " + count.incrementAndGet());
+        producer.send(message, DeliveryMode.NON_PERSISTENT, Message.DEFAULT_PRIORITY, 5000L);
 
-		conn.start();
-	}
+        conn.start();
+    }
 
-	void onStop(@Observes ShutdownEvent ev) throws Exception {
-		System.out.println("Shutting down");
-		if(conn != null) {
-			conn.close();
-		}
+    void onStop(@Observes ShutdownEvent ev) throws Exception {
+        System.out.println("Shutting down");
+        if(conn != null) {
+            conn.close();
+        }
 	}
 }
