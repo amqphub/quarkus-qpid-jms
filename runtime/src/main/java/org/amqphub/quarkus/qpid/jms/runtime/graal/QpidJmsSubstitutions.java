@@ -15,7 +15,10 @@
 */
 package org.amqphub.quarkus.qpid.jms.runtime.graal;
 
+import java.net.URI;
 import java.util.concurrent.ThreadFactory;
+
+import javax.net.ssl.SSLEngine;
 
 import org.apache.qpid.jms.transports.TransportOptions;
 
@@ -23,9 +26,11 @@ import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.ssl.SslContext;
 
 class QpidJmsSubstitutions {
 }
@@ -40,6 +45,18 @@ final class Target_org_apache_qpid_jms_transports_TransportSupport {
     public static boolean isOpenSSLPossible(TransportOptions options) {
         // Disable OpenSSL support
         return false;
+    }
+
+    @Substitute
+    public static SSLEngine createOpenSslEngine(ByteBufAllocator allocator, URI remote, SslContext context, TransportOptions options) throws Exception {
+        // Can't be called due to earlier substitution, but prevents Graal initialising some OpenSSL bits, which fails.
+        throw new IllegalStateException("OpenSSL support is disabled");
+    }
+
+    @Substitute
+    public static SslContext createOpenSslContext(TransportOptions options) throws Exception {
+        // Can't be called due to earlier substitution, but prevents Graal initialising some OpenSSL bits, which fails.
+        throw new IllegalStateException("OpenSSL support is disabled");
     }
 }
 
