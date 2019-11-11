@@ -52,6 +52,18 @@
       <artifactId>quarkus-netty</artifactId>
     </dependency>
 
+    <!-- Normally a provided dependency, but its needed for graal static analysis -->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-handler-proxy</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>io.netty</groupId>
+          <artifactId>netty-codec-socks</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
     <!-- Needed because quarkus-netty needs it present if netty-codec-http 
       is already present on the classpath, which it is for client -->
     <dependency>
