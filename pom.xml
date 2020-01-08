@@ -34,8 +34,8 @@
   </licenses>
 
   <properties>
-    <quarkus.version>1.0.1.Final</quarkus.version>
-    <qpid-jms.version>0.47.0</qpid-jms.version>
+    <quarkus.version>1.1.1.Final</quarkus.version>
+    <qpid-jms.version>0.48.0</qpid-jms.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
