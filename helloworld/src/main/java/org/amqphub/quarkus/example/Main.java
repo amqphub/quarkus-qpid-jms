@@ -15,69 +15,78 @@
 */
 package org.amqphub.quarkus.example;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import org.apache.qpid.jms.JmsConnectionFactory;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 
 @ApplicationScoped
-public class Main {
+public class Main implements Runnable {
 
-    @ConfigProperty(name = "connection.uri", defaultValue = "amqp://localhost:5672")
-    String connectionUri;
-    @ConfigProperty(name = "connection.username", defaultValue = "guest")
-    String username;
-    @ConfigProperty(name = "connection.password", defaultValue = "guest")
-    String password;
+    @Inject
+    ConnectionFactory factory;
 
     private Connection conn;
 
-    void onStart(@Observes StartupEvent ev) throws Exception {
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+    void onStart(@Observes StartupEvent ev) {
         System.out.println("Starting");
+        scheduler.execute(this);
+    }
 
-        final ConnectionFactory fac = new JmsConnectionFactory(connectionUri);
-        conn = fac.createConnection(username, password);
 
-        final Session session = conn.createSession(Session.AUTO_ACKNOWLEDGE);
-        final Destination dest = session.createQueue("examples");
+    public void run() {
+        System.out.println("Running");
 
-        final MessageConsumer consumer = session.createConsumer(dest);
-        final MessageProducer producer = session.createProducer(dest);
+        try {
+            conn = factory.createConnection();
 
-        AtomicInteger count = new AtomicInteger();
-        consumer.setMessageListener(msg -> {
-            try {
-                System.out.println("Received message: " + msg.getBody(String.class));
+            final Session session = conn.createSession(Session.AUTO_ACKNOWLEDGE);
+            final Destination dest = session.createQueue("examples");
 
-                Thread.sleep(1000);
-                System.out.println("Sending next message");
-                TextMessage message = session.createTextMessage("Hello World! " + count.incrementAndGet());
-                producer.send(message, DeliveryMode.NON_PERSISTENT, Message.DEFAULT_PRIORITY, 5000L);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+            final MessageConsumer consumer = session.createConsumer(dest);
+            final MessageProducer producer = session.createProducer(dest);
 
-        System.out.println("Sending first message");
-        TextMessage message = session.createTextMessage("Hello World! " + count.incrementAndGet());
-        producer.send(message, DeliveryMode.NON_PERSISTENT, Message.DEFAULT_PRIORITY, 5000L);
+            AtomicInteger count = new AtomicInteger();
+            consumer.setMessageListener(msg -> {
+                try {
+                    System.out.println("Received message: " + msg.getBody(String.class));
 
-        conn.start();
+                    Thread.sleep(1000);
+                    System.out.println("Sending next message");
+                    TextMessage message = session.createTextMessage("Hello World! " + count.incrementAndGet());
+                    producer.send(message, DeliveryMode.NON_PERSISTENT, Message.DEFAULT_PRIORITY, 5000L);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
+            System.out.println("Sending first message");
+            TextMessage message = session.createTextMessage("Hello World! " + count.incrementAndGet());
+            producer.send(message, DeliveryMode.NON_PERSISTENT, Message.DEFAULT_PRIORITY, 5000L);
+
+            conn.start();
+        } catch (JMSException e) {
+            System.out.println("Exception during run:");
+            e.printStackTrace();
+        }
     }
 
     void onStop(@Observes ShutdownEvent ev) throws Exception {

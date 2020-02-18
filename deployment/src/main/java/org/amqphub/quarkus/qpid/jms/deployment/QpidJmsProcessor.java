@@ -15,6 +15,9 @@
 */
 package org.amqphub.quarkus.qpid.jms.deployment;
 
+import org.amqphub.quarkus.qpid.jms.runtime.QpidJmsProducer;
+import org.amqphub.quarkus.qpid.jms.runtime.QpidJmsRecorder;
+import org.amqphub.quarkus.qpid.jms.runtime.QpidJmsRuntimeConfig;
 import org.apache.qpid.jms.JmsConnectionFactory;
 import org.apache.qpid.jms.meta.JmsConnectionInfo;
 import org.apache.qpid.jms.provider.amqp.AmqpProvider;
@@ -48,8 +51,12 @@ import org.apache.qpid.jms.transports.netty.NettyWsTransportFactory;
 import org.apache.qpid.jms.transports.netty.NettyWssTransportFactory;
 import org.apache.qpid.proton.engine.impl.TransportImpl;
 
+import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
+import io.quarkus.arc.deployment.BeanContainerBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.ExecutionTime;
+import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
@@ -69,6 +76,17 @@ public class QpidJmsProcessor {
         // --enable-all-security-services arg for Graal, enabling various other required bits
         // such as Mac that also allows getting some SASL mechanisms working below.
         extensionSslNativeSupport.produce(new ExtensionSslNativeSupportBuildItem(QPID_JMS));
+    }
+
+    @BuildStep
+    AdditionalBeanBuildItem registerBean() {
+        return AdditionalBeanBuildItem.unremovableOf(QpidJmsProducer.class);
+    }
+
+    @Record(ExecutionTime.RUNTIME_INIT)
+    @BuildStep
+    public void configuration(QpidJmsRecorder recorder, QpidJmsRuntimeConfig runtimeConfig, BeanContainerBuildItem beanContainer) {
+        recorder.setConfig(runtimeConfig, beanContainer.getValue());
     }
 
     @BuildStep
