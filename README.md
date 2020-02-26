@@ -30,4 +30,4 @@ The connection factory configuration is controlled using 3 runtime config proper
 
 An example URL for getting started might be `amqp://localhost:5672`.
 
-For full details of the client URL format and options, consult the documentation on the [Apache Qpid](https://qpid.apache.org/components/jms/) website.
+For full details of the client URL, consult the configuration documentation on the [Apache Qpid](https://qpid.apache.org/components/jms/) website.
