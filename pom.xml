@@ -23,6 +23,7 @@
   <packaging>pom</packaging>
 
   <name>Quarkus Qpid JMS - Parent</name>
+  <description>Extension enabling use of the AMQP 1.0 Qpid JMS client in a Quarkus application</description>
   <url>https://github.com/amqphub/quarkus-qpid-jms</url>
 
   <licenses>
