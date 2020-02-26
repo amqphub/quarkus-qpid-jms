@@ -85,7 +85,6 @@
     <module>runtime</module>
 
     <module>integration-tests</module>
-    <module>helloworld</module>
   </modules>
 
   <dependencyManagement>
