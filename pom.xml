@@ -23,7 +23,6 @@
   <packaging>pom</packaging>
 
   <name>Quarkus Qpid JMS - Parent</name>
-  <description>Extension allowing use of the AMQP 1.0 Qpid JMS client in a Quarkus application native image build</description>
   <url>https://github.com/amqphub/quarkus-qpid-jms</url>
 
   <licenses>
@@ -101,6 +100,11 @@
       <dependency>
         <groupId>org.amqphub.quarkus</groupId>
         <artifactId>quarkus-qpid-jms</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.amqphub.quarkus</groupId>
+        <artifactId>quarkus-qpid-jms-deployment</artifactId>
         <version>${project.version}</version>
       </dependency>
 
