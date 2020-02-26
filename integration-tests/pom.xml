@@ -24,15 +24,14 @@
     </parent>
 
     <artifactId>quarkus-qpid-jms-integration-tests</artifactId>
-    <name>Quarkus Qpid JMS Integration Tests</name>
+    <name>Quarkus Qpid JMS - Integration Tests</name>
     <description>Quarkus Qpid JMS integration tests module</description>
 
     <properties>
         <artemis.version>2.11.0</artemis.version>
         <surefire.plugin.version>2.22.1</surefire.plugin.version>
         <failsafe.plugin.version>2.22.1</failsafe.plugin.version>
-
-        <maven.deploy.skip>true</maven.deploy.skip>
+        <jar.plugin.version>3.1.0</jar.plugin.version>
     </properties>
 
     <dependencies>
@@ -69,6 +68,7 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- TODO: remove this once quarkus-test-artemis 1.3.0 includes it -->
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>artemis-amqp-protocol</artifactId>
@@ -121,6 +121,10 @@
                   <artifactId>maven-failsafe-plugin</artifactId>
                   <version>${failsafe.plugin.version}</version>
                 </plugin>
+                <plugin>
+                  <artifactId>maven-jar-plugin</artifactId>
+                  <version>${jar.plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -132,6 +136,18 @@
                     <execution>
                         <goals>
                             <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
                         </goals>
                     </execution>
                 </executions>
