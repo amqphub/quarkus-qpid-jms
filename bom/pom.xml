@@ -19,7 +19,7 @@
 
   <artifactId>quarkus-qpid-jms-bom</artifactId>
   <groupId>org.amqphub.quarkus</groupId>
-  <version>0.11.3-SNAPSHOT</version>
+  <version>0.11.3</version>
   <packaging>pom</packaging>
 
   <name>Quarkus Qpid JMS - BOM</name>
