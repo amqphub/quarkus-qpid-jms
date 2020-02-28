@@ -35,7 +35,6 @@
 
   <properties>
     <quarkus.version>1.3.0.Alpha2</quarkus.version>
-    <qpid-jms.version>0.48.0</qpid-jms.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -82,8 +81,10 @@
   </developers>
 
   <modules>
-    <module>deployment</module>
+    <module>bom</module>
+
     <module>runtime</module>
+    <module>deployment</module>
 
     <module>integration-tests</module>
   </modules>
@@ -91,21 +92,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.apache.qpid</groupId>
-        <artifactId>qpid-jms-client</artifactId>
-        <version>${qpid-jms.version}</version>
-      </dependency>
-
-      <!-- Internal modules -->
-      <dependency>
         <groupId>org.amqphub.quarkus</groupId>
-        <artifactId>quarkus-qpid-jms</artifactId>
+        <artifactId>quarkus-qpid-jms-bom</artifactId>
         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.amqphub.quarkus</groupId>
-        <artifactId>quarkus-qpid-jms-deployment</artifactId>
-        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
 
       <!-- Quarkus Build Parent / BOM -->
