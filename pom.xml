@@ -19,7 +19,7 @@
 
   <groupId>org.amqphub.quarkus</groupId>
   <artifactId>quarkus-qpid-jms-parent</artifactId>
-  <version>0.11.4-SNAPSHOT</version>
+  <version>0.11.3-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Quarkus Qpid JMS - Parent</name>
