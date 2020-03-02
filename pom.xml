@@ -199,8 +199,8 @@
         <version>${apache-rat-plugin-version}</version>
         <configuration>
           <excludes>
-            <exclude>appveyor.yml</exclude>
-            <exclude>.travis.yml</exclude>
+            <exclude>.github/workflows/build.yml</exclude>
+            <exclude>.github/workflows/cron-build-quarkus-master.yml</exclude>
             <exclude>**/*.md</exclude>
             <exclude>**/*.txt</exclude>
             <exclude>etc/org.eclipse.*</exclude>
@@ -214,6 +214,7 @@
             <exclude>**/*.crt</exclude>
             <exclude>**/*.csr</exclude>
             <exclude>**/application.properties</exclude>
+            <exclude>**/src/main/resources/META-INF/quarkus-extension.yaml</exclude>
           </excludes>
         </configuration>
       </plugin>
