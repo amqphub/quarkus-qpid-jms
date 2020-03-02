@@ -19,8 +19,9 @@
 
   <parent>
     <groupId>org.amqphub.quarkus</groupId>
-    <artifactId>quarkus-qpid-jms-parent</artifactId>
+    <artifactId>quarkus-qpid-jms-build-parent</artifactId>
     <version>0.11.3-SNAPSHOT</version>
+    <relativePath>../poms/build-parent/pom.xml</relativePath>
   </parent>
 
   <artifactId>quarkus-qpid-jms</artifactId>

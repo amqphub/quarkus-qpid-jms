@@ -35,6 +35,7 @@
 
   <properties>
     <quarkus.version>1.2.1.Final</quarkus.version>
+    <qpid-jms.version>0.48.0</qpid-jms.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -50,6 +51,9 @@
     <maven-source-plugin-version>3.0.1</maven-source-plugin-version>
     <maven-javadoc-plugin-version>3.1.0</maven-javadoc-plugin-version>
     <maven-deploy-plugin-version>2.8.2</maven-deploy-plugin-version>
+    <maven-surefire-plugin-version>2.22.1</maven-surefire-plugin-version>
+    <maven-failsafe-plugin-version>2.22.1</maven-failsafe-plugin-version>
+    <maven-jar-plugin-version>3.1.0</maven-jar-plugin-version>
     <apache-rat-plugin-version>0.13</apache-rat-plugin-version>
 
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
@@ -82,33 +86,13 @@
 
   <modules>
     <module>bom</module>
+    <module>poms/build-parent</module>
 
     <module>runtime</module>
     <module>deployment</module>
 
     <module>integration-tests</module>
   </modules>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.amqphub.quarkus</groupId>
-        <artifactId>quarkus-qpid-jms-bom</artifactId>
-        <version>${project.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <!-- Quarkus Build Parent / BOM -->
-      <dependency>
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-build-parent</artifactId>
-        <version>${quarkus.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <build>
     <pluginManagement>
@@ -158,6 +142,31 @@
             <downloadSources>true</downloadSources>
             <downloadJavadocs>true</downloadJavadocs>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-plugin-version}</version>
+          <configuration>
+            <systemProperties>
+              <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+            </systemProperties>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${maven-failsafe-plugin-version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven-jar-plugin-version}</version>
+        </plugin>
+        <plugin>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-maven-plugin</artifactId>
+            <version>${quarkus.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>

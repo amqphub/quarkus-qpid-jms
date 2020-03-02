@@ -14,49 +14,41 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.amqphub.quarkus</groupId>
     <artifactId>quarkus-qpid-jms-parent</artifactId>
     <version>0.11.3-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>quarkus-qpid-jms-bom</artifactId>
   <groupId>org.amqphub.quarkus</groupId>
+  <artifactId>quarkus-qpid-jms-build-parent</artifactId>
   <packaging>pom</packaging>
 
-  <name>Quarkus Qpid JMS - BOM</name>
+  <name>Quarkus Qpid JMS - Build Parent</name>
 
   <dependencyManagement>
     <dependencies>
-
-      <!-- Quarkus -->
-
       <dependency>
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-bom</artifactId>
-        <version>${quarkus.version}</version>
+        <groupId>org.amqphub.quarkus</groupId>
+        <artifactId>quarkus-qpid-jms-bom</artifactId>
+        <version>${project.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
 
-      <!-- Qpid JMS -->
-
+      <!-- Quarkus Build Parent / BOM -->
       <dependency>
-        <groupId>org.apache.qpid</groupId>
-        <artifactId>qpid-jms-client</artifactId>
-        <version>${qpid-jms.version}</version>
-      </dependency>
-
-      <!-- Extension Module -->
-
-      <dependency>
-        <groupId>org.amqphub.quarkus</groupId>
-        <artifactId>quarkus-qpid-jms</artifactId>
-        <version>${project.version}</version>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-build-parent</artifactId>
+        <version>${quarkus.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
+
 </project>

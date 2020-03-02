@@ -19,8 +19,9 @@
 
     <parent>
         <groupId>org.amqphub.quarkus</groupId>
-        <artifactId>quarkus-qpid-jms-parent</artifactId>
+        <artifactId>quarkus-qpid-jms-build-parent</artifactId>
         <version>0.11.3-SNAPSHOT</version>
+        <relativePath>../poms/build-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>quarkus-qpid-jms-integration-tests</artifactId>
@@ -29,9 +30,6 @@
 
     <properties>
         <artemis.version>2.11.0</artemis.version>
-        <surefire.plugin.version>2.22.1</surefire.plugin.version>
-        <failsafe.plugin.version>2.22.1</failsafe.plugin.version>
-        <jar.plugin.version>3.1.0</jar.plugin.version>
     </properties>
 
     <dependencies>
@@ -102,28 +100,10 @@
                 <plugin>
                     <groupId>io.quarkus</groupId>
                     <artifactId>quarkus-maven-plugin</artifactId>
-                    <version>${quarkus.version}</version>
                     <configuration>
                         <noDeps>true</noDeps>
                         <skip>${quarkus.build.skip}</skip>
                     </configuration>
-                </plugin>
-                <plugin>
-                  <artifactId>maven-surefire-plugin</artifactId>
-                  <version>${surefire.plugin.version}</version>
-                  <configuration>
-                    <systemProperties>
-                      <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                    </systemProperties>
-                  </configuration>
-                </plugin>
-                <plugin>
-                  <artifactId>maven-failsafe-plugin</artifactId>
-                  <version>${failsafe.plugin.version}</version>
-                </plugin>
-                <plugin>
-                  <artifactId>maven-jar-plugin</artifactId>
-                  <version>${jar.plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
