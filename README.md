@@ -20,6 +20,8 @@ The client can then be utilised though dependency injection of a JMS ConnectionF
     @Inject
     ConnectionFactory connectionFactory;
 
+### Configuration
+
 The connection factory configuration is controlled using 3 runtime config properties, e.g in your `application.properties` file:
 
 | Config Property           | Required | Description                             |
