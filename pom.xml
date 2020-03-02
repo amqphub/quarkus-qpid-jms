@@ -86,7 +86,6 @@
 
   <modules>
     <module>bom</module>
-    <module>poms/build-parent</module>
 
     <module>runtime</module>
     <module>deployment</module>

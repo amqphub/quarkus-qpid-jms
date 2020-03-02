@@ -19,14 +19,34 @@
 
   <parent>
     <groupId>org.amqphub.quarkus</groupId>
-    <artifactId>quarkus-qpid-jms-build-parent</artifactId>
+    <artifactId>quarkus-qpid-jms-parent</artifactId>
     <version>0.11.3-SNAPSHOT</version>
-    <relativePath>../poms/build-parent/pom.xml</relativePath>
   </parent>
 
   <artifactId>quarkus-qpid-jms</artifactId>
   <name>Quarkus Qpid JMS</name>
   <description>Use the AMQP 1.0 Qpid JMS client as a JMS implementation</description>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.amqphub.quarkus</groupId>
+        <artifactId>quarkus-qpid-jms-bom</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- Quarkus Build Parent / BOM -->
+      <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-build-parent</artifactId>
+        <version>${quarkus.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
