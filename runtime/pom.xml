@@ -25,7 +25,7 @@
 
   <artifactId>quarkus-qpid-jms</artifactId>
   <name>Quarkus Qpid JMS</name>
-  <description>Use the AMQP 1.0 Qpid JMS client as a JMS implementation</description>
+  <description>Use JMS APIs to connect to AMQP 1.0 brokers like Artemis</description>
 
   <dependencyManagement>
     <dependencies>
