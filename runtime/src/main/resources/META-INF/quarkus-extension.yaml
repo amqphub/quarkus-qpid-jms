@@ -1,7 +1,6 @@
 ---
 name: "AMQP 1.0 JMS client - Apache Qpid JMS"
 metadata:
-  short-name: artemis
   keywords:
   - "amqp"
   - "qpid-jms"
