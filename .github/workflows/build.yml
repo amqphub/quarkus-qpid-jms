@@ -8,6 +8,10 @@ jobs:
     strategy:
       matrix:
         java: [ 8, 11 ]
+        graal: [ 19.3.1-java8, 19.3.1-java11 ]
+        exclude:
+          - java: 11
+            graal: 19.3.1-java8
 
     steps:
       - uses: actions/checkout@v2
@@ -23,11 +27,11 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
 
-      - name: Pull Quarkus Native Builder Image
-        run: docker pull quay.io/quarkus/ubi-quarkus-native-image:19.3.1-java${{ matrix.java }}
+      - name: Pull Quarkus Native Builder Image ${{ matrix.graal }}
+        run: docker pull quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}
 
       - name: Build - JVM
         run: mvn -B clean verify
 
       - name: Build - Native
-        run: mvn -B clean verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:19.3.1-java${{ matrix.java }}
+        run: mvn -B clean verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}
