@@ -26,7 +26,7 @@ import io.quarkus.arc.DefaultBean;
 @ApplicationScoped
 public class QpidJmsProducer {
 
-    private QpidJmsRuntimeConfig config;
+    private volatile QpidJmsRuntimeConfig config;
 
     @Produces
     @ApplicationScoped
