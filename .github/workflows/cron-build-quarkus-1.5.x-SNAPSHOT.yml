@@ -1,4 +1,4 @@
-name: "Cron Build With Quarkus 1.4.x SNAPSHOT"
+name: "Cron Build With Quarkus 1.5.x SNAPSHOT"
 
 on:
   schedule:
