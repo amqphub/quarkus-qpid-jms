@@ -17,6 +17,7 @@ package org.amqphub.quarkus.qpid.jms.runtime;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.jms.ConnectionFactory;
 
 import org.apache.qpid.jms.JmsConnectionFactory;
@@ -26,7 +27,8 @@ import io.quarkus.arc.DefaultBean;
 @ApplicationScoped
 public class QpidJmsProducer {
 
-    private volatile QpidJmsRuntimeConfig config;
+    @Inject
+    QpidJmsRuntimeConfig config;
 
     @Produces
     @ApplicationScoped
@@ -37,9 +39,5 @@ public class QpidJmsProducer {
 
     public QpidJmsRuntimeConfig getConfig() {
         return config;
-    }
-
-    public void setConfig(QpidJmsRuntimeConfig config) {
-        this.config = config;
     }
 }

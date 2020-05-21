@@ -16,7 +16,6 @@
 package org.amqphub.quarkus.qpid.jms.deployment;
 
 import org.amqphub.quarkus.qpid.jms.runtime.QpidJmsProducer;
-import org.amqphub.quarkus.qpid.jms.runtime.QpidJmsRecorder;
 import org.amqphub.quarkus.qpid.jms.runtime.QpidJmsRuntimeConfig;
 import org.apache.qpid.jms.JmsConnectionFactory;
 import org.apache.qpid.jms.meta.JmsConnectionInfo;
@@ -81,12 +80,6 @@ public class QpidJmsProcessor {
     @BuildStep
     AdditionalBeanBuildItem registerBean() {
         return AdditionalBeanBuildItem.unremovableOf(QpidJmsProducer.class);
-    }
-
-    @Record(ExecutionTime.RUNTIME_INIT)
-    @BuildStep
-    public void configuration(QpidJmsRecorder recorder, QpidJmsRuntimeConfig runtimeConfig, BeanContainerBuildItem beanContainer) {
-        recorder.setConfig(runtimeConfig, beanContainer.getValue());
     }
 
     @BuildStep
