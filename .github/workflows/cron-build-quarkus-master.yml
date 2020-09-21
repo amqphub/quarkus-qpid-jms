@@ -27,7 +27,7 @@ jobs:
         run: docker pull quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
 
       - name: Build Quarkus master
-        run: git clone --depth 1 --branch master https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD) && mvn -B --settings .github/cron-maven-settings.xml clean install -DskipTests -DskipITs
+        run: git clone --depth 1 --branch master https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD) && mvn -B --settings ../.github/cron-maven-settings.xml clean install -DskipTests -DskipITs
 
       - name: Build - JVM
         run: mvn -B clean verify -Dquarkus.version=999-SNAPSHOT
