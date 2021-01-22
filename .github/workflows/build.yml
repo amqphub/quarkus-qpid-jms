@@ -15,11 +15,11 @@ jobs:
       fail-fast: false
       matrix:
         java: [ 8, 11 ]
-        graal: [ 20.2.0, 20.3.0]
+        graal: [ 20.2.0, 20.3.1]
         exclude:
-          # No ubi-quarkus-native-image for Java 8 + GraalVM 20.3.0
+          # No ubi-quarkus-native-image for Java 8 + GraalVM 20.3.1
           - java: 8
-            graal: 20.3.0
+            graal: 20.3.1
 
     steps:
       - uses: actions/checkout@v2
