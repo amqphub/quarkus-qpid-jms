@@ -16,10 +16,10 @@ jobs:
         java: [ 11 ]
         graal: [ 20.3.1 , 21.0.0 ]
         include:
-          # Add Java 8+16 JVM-only runs (native build only supported with Java 11 now).
+          # Add Java 8+15 JVM-only runs (native build only supported with Java 11 now).
           - java: 8
             graal: none
-          - java: 16
+          - java: 15
             graal: none
 
     steps:
