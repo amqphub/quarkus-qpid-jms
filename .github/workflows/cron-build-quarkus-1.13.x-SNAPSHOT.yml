@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         java: [ 11 ]
-        graal: [ 20.3.1 , 21.0.0 ]
+        graal: [ 20.3.1.2 , 21.0.0.2 ]
         include:
           # Add Java 8+15 JVM-only runs (native build only supported with Java 11 now).
           - java: 8
