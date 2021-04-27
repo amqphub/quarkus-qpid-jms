@@ -34,15 +34,16 @@
   </licenses>
 
   <properties>
-    <quarkus.version>1.13.0.Final</quarkus.version>
+    <quarkus.version>2.0.0.Alpha1</quarkus.version>
     <qpid-jms.version>0.58.0</qpid-jms.version>
 
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.release>11</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <supported-maven-versions>[3.6.3,)</supported-maven-versions>
 
-    <maven-enforcer-plugin-version>1.4.1</maven-enforcer-plugin-version>
+    <maven-enforcer-plugin-version>3.0.0-M3</maven-enforcer-plugin-version>
     <maven-gpg-plugin-version>1.6</maven-gpg-plugin-version>
     <maven-eclipse-plugin-version>2.10</maven-eclipse-plugin-version>
     <maven-idea-plugin-version>2.2.1</maven-idea-plugin-version>
@@ -193,6 +194,9 @@
                 <requireMavenVersion>
                   <version>${supported-maven-versions}</version>
                 </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>[11,)</version>
+                </requireJavaVersion>
               </rules>
             </configuration>
             <goals>
