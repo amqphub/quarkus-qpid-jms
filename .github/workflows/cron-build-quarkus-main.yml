@@ -44,7 +44,7 @@ jobs:
 
       - name: Build Quarkus main
         env:
-          MAVEN_PL: "., io.quarkus:quarkus-bom, io.quarkus:quarkus-core-deployment, io.quarkus:quarkus-arc-deployment, io.quarkus:quarkus-netty-deployment, io.quarkus:quarkus-extension-processor, io.quarkus:quarkus-bootstrap-maven-plugin, io.quarkus:quarkus-maven-plugin, io.quarkus:quarkus-resteasy-deployment, io.quarkus:quarkus-jackson-deployment, io.quarkus:quarkus-test-artemis, io.quarkus:quarkus-junit5"
+          MAVEN_PL: "., io.quarkus:quarkus-bom, io.quarkus:quarkus-core-deployment, io.quarkus:quarkus-arc-deployment, io.quarkus:quarkus-netty-deployment, io.quarkus:quarkus-extension-processor, io.quarkus:quarkus-bootstrap-bom, io.quarkus:quarkus-bootstrap-maven-plugin, io.quarkus:quarkus-maven-plugin, io.quarkus:quarkus-resteasy-deployment, io.quarkus:quarkus-jackson-deployment, io.quarkus:quarkus-test-artemis, io.quarkus:quarkus-junit5"
         run: |
           git clone --depth 1 --branch main https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
           mvn -B -s ../.github/cron-maven-settings.xml clean install -DskipTests -DskipITs -Dformat.skip -DskipDocs -am -pl "${MAVEN_PL}"
