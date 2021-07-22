@@ -26,12 +26,10 @@ The client can then be utilised though dependency injection of a JMS ConnectionF
 
 The connection factory configuration is controlled using 3 runtime config properties, e.g in your `application.properties` file:
 
-| Config Property           | Required | Description                             |
-| ------------------------- | -------- | --------------------------------------- |
-| quarkus.qpid-jms.url      | Yes      | Connection URL for the injected factory |
-| quarkus.qpid-jms.username | No       | Optional username to set on the factory |
-| quarkus.qpid-jms.password | No       | Optional password to set on the factory |
+| Config Property           | Description                             | Default                 |
+| ------------------------- | --------------------------------------- | ----------------------- |
+| quarkus.qpid-jms.url      | Connection URL for the injected factory | "amqp://localhost:5672" |
+| quarkus.qpid-jms.username | Optional username to set on the factory |                         |
+| quarkus.qpid-jms.password | Optional password to set on the factory |                         |
 
-An example URL for getting started might be `amqp://localhost:5672`.
-
-For full details of the client URL, consult the configuration documentation on the [Apache Qpid](https://qpid.apache.org/components/jms/) website.
+For full details of the client URL and its related options, consult the configuration documentation on the [Apache Qpid](https://qpid.apache.org/components/jms/) website.

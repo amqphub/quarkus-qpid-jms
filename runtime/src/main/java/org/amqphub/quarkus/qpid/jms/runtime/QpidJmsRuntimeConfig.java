@@ -24,10 +24,12 @@ import io.quarkus.runtime.annotations.ConfigRoot;
 @ConfigRoot(name = "qpid-jms", phase = ConfigPhase.RUN_TIME)
 public class QpidJmsRuntimeConfig {
 
+   public static final String DEFAULT_URL = "amqp://localhost:5672";
+
     /**
      * Connection URL for the factory
      */
-    @ConfigItem
+    @ConfigItem(defaultValue = DEFAULT_URL)
     public String url;
 
     /**
