@@ -213,6 +213,7 @@
           <excludes>
             <exclude>.github/workflows/build.yml</exclude>
             <exclude>.github/workflows/cron-build-*.yml</exclude>
+            <exclude>.github/cron-maven-settings.xml</exclude>
             <exclude>**/*.md</exclude>
             <exclude>**/*.txt</exclude>
             <exclude>etc/org.eclipse.*</exclude>
