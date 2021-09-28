@@ -18,8 +18,9 @@ jobs:
         java: [ 11 ]
         graal: [ 20.3.3 , 21.2.0 ]
         include:
-          # Add Java 16 JVM-only run (native build only supported with Java 11 now).
           - java: 16
+            graal: 21.2.0
+          - java: 17
             graal: none
 
     steps:
@@ -35,7 +36,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java }}
-          distribution: 'adopt'
+          distribution: 'temurin'
 
       - name: Pull Quarkus Native Builder Image (${{ matrix.graal }})
         if: matrix.graal != 'none'
