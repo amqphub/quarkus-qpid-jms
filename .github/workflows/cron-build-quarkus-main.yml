@@ -13,11 +13,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ 11 ]
-        graal: [ 20.3.3 , 21.2.0 ]
+        java: [ 11, 16 ]
+        graal: [ 21.2.0 ]
         include:
-          - java: 16
-            graal: 21.2.0
           - java: 17
             graal: none
     steps:
