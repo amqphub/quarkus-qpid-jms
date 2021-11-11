@@ -1,4 +1,4 @@
-name: "Cron Build With Quarkus 2.3.x-SNAPSHOT"
+name: "Cron Build With Quarkus 2.5.x-SNAPSHOT"
 
 on:
   schedule:
@@ -13,13 +13,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ 11 ]
-        graal: [ 20.3.3 , 21.2.0 ]
-        include:
-          - java: 16
-            graal: 21.2.0
-          - java: 17
-            graal: none
+        java: [ 11, 17 ]
+        graal: [ 21.3.0 ]
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
@@ -42,11 +38,11 @@ jobs:
         if: matrix.graal != 'none'
         run: docker pull quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
 
-      - name: Build Quarkus 2.3.x-SNAPSHOT
+      - name: Build Quarkus 2.5.x-SNAPSHOT
         env:
-          MAVEN_PL: "., io.quarkus:quarkus-bom, io.quarkus:quarkus-core-deployment, io.quarkus:quarkus-arc-deployment, io.quarkus:quarkus-netty-deployment, io.quarkus:quarkus-extension-processor, io.quarkus:quarkus-bootstrap-bom, io.quarkus:quarkus-bootstrap-maven-plugin, io.quarkus:quarkus-maven-plugin, io.quarkus:quarkus-resteasy-deployment, io.quarkus:quarkus-jackson-deployment, io.quarkus:quarkus-test-artemis, io.quarkus:quarkus-junit5"
+          MAVEN_PL: "., io.quarkus:quarkus-bom, io.quarkus:quarkus-core-deployment, io.quarkus:quarkus-arc-deployment, io.quarkus:quarkus-netty-deployment, io.quarkus:quarkus-extension-processor, io.quarkus:quarkus-bootstrap-bom, io.quarkus:quarkus-bootstrap-bom-test, io.quarkus:quarkus-bootstrap-maven-plugin, io.quarkus:quarkus-maven-plugin, io.quarkus:quarkus-resteasy-deployment, io.quarkus:quarkus-jackson-deployment, io.quarkus:quarkus-test-artemis, io.quarkus:quarkus-junit5"
         run: |
-          git clone --depth 1 --branch 2.3 https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
+          git clone --depth 1 --branch 2.5 https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
           mvn -B -s ../.github/cron-maven-settings.xml clean install -DskipTests -DskipITs -Dformat.skip -DskipDocs -am -pl "${MAVEN_PL}"
 
       - name: Build - JVM

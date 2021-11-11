@@ -13,11 +13,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ 11, 16 ]
-        graal: [ 21.2.0 ]
-        include:
-          - java: 17
-            graal: none
+        java: [ 11, 17 ]
+        graal: [ 21.3.0 ]
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
