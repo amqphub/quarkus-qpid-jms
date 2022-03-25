@@ -1,4 +1,4 @@
-name: "Cron Build With Quarkus Main"
+name: "Cron Build With Quarkus 2.8.x-SNAPSHOT"
 
 on:
   schedule:
@@ -38,11 +38,11 @@ jobs:
         if: matrix.graal != 'none'
         run: docker pull quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
 
-      - name: Build Quarkus main
+      - name: Build Quarkus 2.8.x-SNAPSHOT
         env:
           MAVEN_PL: "., io.quarkus:quarkus-bom, io.quarkus:quarkus-core-deployment, io.quarkus:quarkus-arc-deployment, io.quarkus:quarkus-netty-deployment, io.quarkus:quarkus-extension-processor, io.quarkus:quarkus-bootstrap-bom, io.quarkus:quarkus-bootstrap-bom-test, io.quarkus:quarkus-bootstrap-maven-plugin, io.quarkus:quarkus-maven-plugin, io.quarkus:quarkus-resteasy-deployment, io.quarkus:quarkus-jackson-deployment, io.quarkus:quarkus-junit5"
         run: |
-          git clone --depth 1 --branch main https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
+          git clone --depth 1 --branch 2.8 https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
           mvn -B -s ../.github/cron-maven-settings.xml clean install -DskipTests -DskipITs -Dformat.skip -DskipDocs -am -pl "${MAVEN_PL}"
 
       - name: Build - JVM
