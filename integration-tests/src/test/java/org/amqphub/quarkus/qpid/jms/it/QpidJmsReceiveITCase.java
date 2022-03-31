@@ -15,9 +15,9 @@
 */
 package org.amqphub.quarkus.qpid.jms.it;
 
-import io.quarkus.test.junit.NativeImageTest;
+import io.quarkus.test.junit.QuarkusIntegrationTest;
 
-@NativeImageTest
+@QuarkusIntegrationTest
 public class QpidJmsReceiveITCase extends QpidJmsReceiveTest {
 
 }
