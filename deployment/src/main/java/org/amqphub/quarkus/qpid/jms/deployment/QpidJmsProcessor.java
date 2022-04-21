@@ -16,7 +16,6 @@
 package org.amqphub.quarkus.qpid.jms.deployment;
 
 import org.amqphub.quarkus.qpid.jms.runtime.QpidJmsProducer;
-import org.amqphub.quarkus.qpid.jms.runtime.QpidJmsRuntimeConfig;
 import org.apache.qpid.jms.JmsConnectionFactory;
 import org.apache.qpid.jms.meta.JmsConnectionInfo;
 import org.apache.qpid.jms.provider.amqp.AmqpProvider;
@@ -51,11 +50,8 @@ import org.apache.qpid.jms.transports.netty.NettyWssTransportFactory;
 import org.apache.qpid.proton.engine.impl.TransportImpl;
 
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
-import io.quarkus.arc.deployment.BeanContainerBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
-import io.quarkus.deployment.annotations.ExecutionTime;
-import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
