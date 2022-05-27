@@ -10,4 +10,4 @@ metadata:
   guide: "https://quarkus.io/guides/jms"
   categories:
   - "messaging"
-  status: "preview"
+  status: "stable"
