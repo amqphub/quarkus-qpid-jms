@@ -40,7 +40,7 @@ jobs:
 
       - name: Build Quarkus 2.10.x-SNAPSHOT
         env:
-          MAVEN_PL: "., io.quarkus:quarkus-bom, io.quarkus:quarkus-core-deployment, io.quarkus:quarkus-arc-deployment, io.quarkus:quarkus-netty-deployment, io.quarkus:quarkus-extension-processor, io.quarkus:quarkus-bootstrap-bom, io.quarkus:quarkus-bootstrap-bom-test, io.quarkus:quarkus-bootstrap-maven-plugin, io.quarkus:quarkus-maven-plugin, io.quarkus:quarkus-resteasy-deployment, io.quarkus:quarkus-jackson-deployment, io.quarkus:quarkus-junit5, io.quarkus:quarkus-jsonp-deployment"
+          MAVEN_PL: "., io.quarkus:quarkus-bom, io.quarkus:quarkus-core-deployment, io.quarkus:quarkus-arc-deployment, io.quarkus:quarkus-netty-deployment, io.quarkus:quarkus-extension-processor, io.quarkus:quarkus-bootstrap-bom, io.quarkus:quarkus-bootstrap-bom-test, io.quarkus:quarkus-extension-maven-plugin, io.quarkus:quarkus-maven-plugin, io.quarkus:quarkus-resteasy-deployment, io.quarkus:quarkus-jackson-deployment, io.quarkus:quarkus-junit5, io.quarkus:quarkus-jsonp-deployment"
         run: |
           git clone --depth 1 --branch 2.10 https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
           mvn -B -s ../.github/cron-maven-settings.xml clean install -DskipTests -DskipITs -Dformat.skip -DskipDocs -am -pl "${MAVEN_PL}"
