@@ -1,8 +1,6 @@
 name: "Cron Build With Quarkus 2.9.x-SNAPSHOT"
 
 on:
-  schedule:
-    - cron: '0 3 * * *'
   repository_dispatch:
   workflow_dispatch:
 
