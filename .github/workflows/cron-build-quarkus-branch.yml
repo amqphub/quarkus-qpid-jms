@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     if: github.repository == 'amqphub/quarkus-qpid-jms' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
