@@ -46,8 +46,8 @@ jobs:
           mvn -B -s ../.github/cron-maven-settings.xml clean install -DskipTests -DskipITs -Dformat.skip -DskipDocs -am -pl "${MAVEN_PL}"
 
       - name: Build - JVM
-        run: mvn -B clean verify -Dquarkus-version=999-SNAPSHOT
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT
 
       - name: Build - Native
         if: matrix.graal != 'none'
-        run: mvn -B clean verify -Dquarkus-version=999-SNAPSHOT -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-graalvmce-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-graalvmce-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
