@@ -15,8 +15,8 @@
 */
 package org.amqphub.quarkus.qpid.jms.it;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.jms.ConnectionFactory;
 import jakarta.jms.JMSContext;
 import jakarta.jms.JMSProducer;
