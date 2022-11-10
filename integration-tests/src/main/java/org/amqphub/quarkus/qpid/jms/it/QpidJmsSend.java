@@ -21,7 +21,6 @@ import javax.jms.ConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.JMSProducer;
 import javax.jms.Queue;
-import javax.jms.Session;
 
 @ApplicationScoped
 public class QpidJmsSend {
@@ -33,7 +32,7 @@ public class QpidJmsSend {
 
 
     public void sendMessageBody(String body) {
-        try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
+        try (JMSContext context = connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE)) {
             Queue destination = context.createQueue(QUEUE_NAME);
             JMSProducer producer = context.createProducer();
 

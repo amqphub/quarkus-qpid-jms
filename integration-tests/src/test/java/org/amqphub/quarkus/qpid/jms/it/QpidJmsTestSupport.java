@@ -19,7 +19,6 @@ import java.util.UUID;
 
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
-import javax.jms.Session;
 
 import org.apache.qpid.jms.JmsConnectionFactory;
 
@@ -39,7 +38,7 @@ public class QpidJmsTestSupport {
     public static JMSContext createContext() throws JMSException {
         JmsConnectionFactory jmsConnectionFactory = new JmsConnectionFactory(CONNECTION_URL);
 
-        return jmsConnectionFactory.createContext(Session.AUTO_ACKNOWLEDGE);
+        return jmsConnectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE);
     }
 
     public static String generateBody() {
