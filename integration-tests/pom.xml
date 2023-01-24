@@ -28,7 +28,7 @@
     <description>Quarkus Qpid JMS integration tests module</description>
 
     <properties>
-        <quarkus-test-artemis-version>3.0.0.Alpha4</quarkus-test-artemis-version>
+        <quarkus-test-artemis-version>3.0.0.Alpha5</quarkus-test-artemis-version>
     </properties>
 
     <dependencyManagement>
