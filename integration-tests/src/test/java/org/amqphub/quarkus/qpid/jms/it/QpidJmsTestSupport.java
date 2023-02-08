@@ -17,8 +17,8 @@ package org.amqphub.quarkus.qpid.jms.it;
 
 import java.util.UUID;
 
-import javax.jms.JMSContext;
-import javax.jms.JMSException;
+import jakarta.jms.JMSContext;
+import jakarta.jms.JMSException;
 
 import org.apache.qpid.jms.JmsConnectionFactory;
 

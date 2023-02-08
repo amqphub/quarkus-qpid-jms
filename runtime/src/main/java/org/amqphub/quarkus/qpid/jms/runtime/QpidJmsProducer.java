@@ -15,10 +15,10 @@
 */
 package org.amqphub.quarkus.qpid.jms.runtime;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.jms.ConnectionFactory;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+import jakarta.jms.ConnectionFactory;
 
 import org.apache.qpid.jms.JmsConnectionFactory;
 

@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.amqphub.quarkus</groupId>
         <artifactId>quarkus-qpid-jms-parent</artifactId>
-        <version>0.43.0-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>quarkus-qpid-jms-integration-tests</artifactId>
@@ -28,7 +28,7 @@
     <description>Quarkus Qpid JMS integration tests module</description>
 
     <properties>
-        <quarkus-test-artemis-version>1.0.5</quarkus-test-artemis-version>
+        <quarkus-test-artemis-version>3.0.0.Alpha5</quarkus-test-artemis-version>
     </properties>
 
     <dependencyManagement>
