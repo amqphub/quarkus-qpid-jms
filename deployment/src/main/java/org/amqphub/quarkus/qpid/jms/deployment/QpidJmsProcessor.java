@@ -96,71 +96,71 @@ public class QpidJmsProcessor {
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/provider/amqpwss"));
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/provider/redirects/ws"));
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/provider/redirects/wss"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, AmqpProviderFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, AmqpProvider.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(AmqpProviderFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(AmqpProvider.class).methods().build());
 
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/provider/failover"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, FailoverProviderFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, FailoverProvider.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(FailoverProviderFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(FailoverProvider.class).methods().build());
 
         // Options setter reflective access
         // (See also: AmqpProvider, FailoverProvider, transports, and related factories).
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, JmsConnectionFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, JmsConnectionInfo.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, TransportOptions.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(JmsConnectionFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(JmsConnectionInfo.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(TransportOptions.class).methods().build());
 
         // Transport impls
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/transports/tcp"));
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/transports/ssl"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, NettyTcpTransportFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, NettySslTransportFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, NettyTcpTransport.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(NettyTcpTransportFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(NettySslTransportFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(NettyTcpTransport.class).methods().build());
 
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/transports/ws"));
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/transports/wss"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, NettyWsTransportFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, NettyWssTransportFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, NettyWsTransport.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(NettyWsTransportFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(NettyWssTransportFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(NettyWsTransport.class).methods().build());
 
         // SASL mechanisms
         // NOTE: The [S]CRAM mechs require all security services to be enabled. See #enableSecurityServices at top.
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/sasl/PLAIN"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, PlainMechanismFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, PlainMechanism.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(PlainMechanismFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(PlainMechanism.class).methods().build());
 
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/sasl/ANONYMOUS"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, AnonymousMechanismFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, AnonymousMechanism.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(AnonymousMechanismFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(AnonymousMechanism.class).methods().build());
 
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/sasl/EXTERNAL"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, ExternalMechanismFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, ExternalMechanism.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(ExternalMechanismFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(ExternalMechanism.class).methods().build());
 
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/sasl/CRAM-MD5"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, CramMD5MechanismFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, CramMD5Mechanism.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(CramMD5MechanismFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(CramMD5Mechanism.class).methods().build());
 
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/sasl/SCRAM-SHA-1"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, ScramSHA1MechanismFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, ScramSHA1Mechanism.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(ScramSHA1MechanismFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(ScramSHA1Mechanism.class).methods().build());
 
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/sasl/SCRAM-SHA-256"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, ScramSHA256MechanismFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, ScramSHA256Mechanism.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(ScramSHA256MechanismFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(ScramSHA256Mechanism.class).methods().build());
 
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/sasl/XOAUTH2"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, XOauth2MechanismFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(true, false, XOauth2Mechanism.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(XOauth2MechanismFactory.class).methods().build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(XOauth2Mechanism.class).methods().build());
 
         // Tracing
         resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/tracing/noop"));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(false, false, JmsNoOpTracerFactory.class.getName()));
-        reflectiveClass.produce(new ReflectiveClassBuildItem(false, false, JmsNoOpTracer.class.getName()));
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(JmsNoOpTracerFactory.class).build());
+        reflectiveClass.produce(ReflectiveClassBuildItem.builder(JmsNoOpTracer.class).build());
 
         if (QuarkusClassLoader.isClassPresentAtRuntime(GLOBAL_TRACER_CLASS)) {
             resource.produce(new NativeImageResourceBuildItem("META-INF/services/org/apache/qpid/jms/tracing/opentracing"));
-            reflectiveClass.produce(new ReflectiveClassBuildItem(false, false, OpenTracingTracerFactory.class.getName()));
-            reflectiveClass.produce(new ReflectiveClassBuildItem(false, false, OpenTracingTracer.class.getName()));
+            reflectiveClass.produce(ReflectiveClassBuildItem.builder(OpenTracingTracerFactory.class).build());
+            reflectiveClass.produce(ReflectiveClassBuildItem.builder(OpenTracingTracer.class).build());
         }
     }
 }
