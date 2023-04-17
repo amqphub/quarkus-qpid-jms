@@ -17,6 +17,8 @@ package org.amqphub.quarkus.qpid.jms.it;
 
 import static org.amqphub.quarkus.qpid.jms.it.QpidJmsTestSupport.ENDPOINT_PATH;
 
+import org.amqphub.quarkus.qpid.jms.it.artemis.BrokerTestResource;
+
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
 import javax.jms.Queue;
@@ -25,14 +27,13 @@ import javax.ws.rs.core.Response.Status;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.quarkus.artemis.test.ArtemisTestResource;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
 @QuarkusTest
-@QuarkusTestResource(ArtemisTestResource.class)
+@QuarkusTestResource(BrokerTestResource.class)
 public class QpidJmsSendTest {
 
     /**
