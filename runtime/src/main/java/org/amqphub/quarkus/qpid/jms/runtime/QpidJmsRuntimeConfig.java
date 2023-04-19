@@ -43,4 +43,11 @@ public class QpidJmsRuntimeConfig {
      */
     @ConfigItem
     public Optional<String> password;
+
+    /**
+     * Whether to wrap a ConnectionFactory by ConnectionFactoryWrapper which could be introduced by other extensions,
+     * such as quarkus-pooled-jms to provide pooling capability
+     */
+    @ConfigItem(defaultValue = "false")
+    public boolean wrap;
 }

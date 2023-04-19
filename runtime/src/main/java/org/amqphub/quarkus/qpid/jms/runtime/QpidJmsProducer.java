@@ -15,6 +15,7 @@
 */
 package org.amqphub.quarkus.qpid.jms.runtime;
 
+import io.quarkus.arc.Arc;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
@@ -34,7 +35,14 @@ public class QpidJmsProducer {
     @ApplicationScoped
     @DefaultBean
     public ConnectionFactory connectionFactory() {
-        return new JmsConnectionFactory(config.username.orElse(null), config.password.orElse(null), config.url);
+        ConnectionFactory connectionFactory = new JmsConnectionFactory(config.username.orElse(null), config.password.orElse(null), config.url);
+        ConnectionFactoryWrapper wrapper = Arc.container().instance(ConnectionFactoryWrapper.class).get();
+
+        if (config.wrap && wrapper != null) {
+            return wrapper.wrap(connectionFactory);
+        } else {
+            return connectionFactory;
+        }
     }
 
     public QpidJmsRuntimeConfig getConfig() {

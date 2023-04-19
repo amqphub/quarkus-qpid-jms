@@ -15,7 +15,13 @@
 */
 package org.amqphub.quarkus.qpid.jms.deployment;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.jms.ConnectionFactory;
+
+import org.amqphub.quarkus.qpid.jms.runtime.ConnectionFactoryWrapper;
 import org.amqphub.quarkus.qpid.jms.runtime.QpidJmsProducer;
+import org.amqphub.quarkus.qpid.jms.runtime.QpidJmsRecorder;
+
 import org.apache.qpid.jms.JmsConnectionFactory;
 import org.apache.qpid.jms.meta.JmsConnectionInfo;
 import org.apache.qpid.jms.provider.amqp.AmqpProvider;
@@ -50,15 +56,22 @@ import org.apache.qpid.jms.transports.netty.NettyWssTransportFactory;
 import org.apache.qpid.proton.engine.impl.TransportImpl;
 
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
+import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.ExecutionTime;
+import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedClassBuildItem;
+import io.quarkus.jms.spi.deployment.ConnectionFactoryWrapperBuildItem;
+
+import java.util.Optional;
+import java.util.function.Function;
 
 public class QpidJmsProcessor {
     private static final String QPID_JMS = "qpid-jms";
@@ -79,6 +92,23 @@ public class QpidJmsProcessor {
     @BuildStep
     AdditionalBeanBuildItem registerBean() {
         return AdditionalBeanBuildItem.unremovableOf(QpidJmsProducer.class);
+    }
+
+    @BuildStep
+    @Record(ExecutionTime.RUNTIME_INIT)
+    void connectionFactoryWrapper(Optional<ConnectionFactoryWrapperBuildItem> connectionFactoryWrapper,
+                                  QpidJmsRecorder recorder,
+                                  BuildProducer<SyntheticBeanBuildItem> syntheticBeanProducer) {
+        if (connectionFactoryWrapper.isPresent()) {
+            Function<ConnectionFactory, Object> wrapper = connectionFactoryWrapper.get().getWrapper();
+            SyntheticBeanBuildItem.ExtendedBeanConfigurator configurator = SyntheticBeanBuildItem.configure(ConnectionFactoryWrapper.class)
+                    .setRuntimeInit()
+                    .defaultBean()
+                    .unremovable()
+                    .scope(ApplicationScoped.class)
+                    .runtimeValue(recorder.getConnectionFactoryWrapper(wrapper));
+            syntheticBeanProducer.produce(configurator.done());
+        }
     }
 
     @BuildStep
