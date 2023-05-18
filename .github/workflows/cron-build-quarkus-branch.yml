@@ -38,11 +38,11 @@ jobs:
         if: matrix.graal != 'none'
         run: docker pull quay.io/quarkus/ubi-quarkus-graalvmce-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
 
-      - name: Build Quarkus 3.0.x-SNAPSHOT
+      - name: Build Quarkus 3.1.x-SNAPSHOT
         env:
           MAVEN_PL: "., io.quarkus:quarkus-bom, io.quarkus:quarkus-core-deployment, io.quarkus:quarkus-arc-deployment, io.quarkus:quarkus-netty-deployment, io.quarkus:quarkus-extension-processor, io.quarkus:quarkus-bootstrap-bom, io.quarkus:quarkus-bootstrap-bom-test, io.quarkus:quarkus-extension-maven-plugin, io.quarkus:quarkus-maven-plugin, io.quarkus:quarkus-resteasy-reactive-deployment, io.quarkus:quarkus-jms-spi-deployment, io.quarkus:quarkus-junit5"
         run: |
-          git clone --depth 1 --branch 3.0 https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
+          git clone --depth 1 --branch 3.1 https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
           mvn -B -s ../.github/cron-maven-settings.xml clean install -DskipTests -DskipITs -Dformat.skip -DskipDocs -am -pl "${MAVEN_PL}"
 
       - name: Build - JVM
