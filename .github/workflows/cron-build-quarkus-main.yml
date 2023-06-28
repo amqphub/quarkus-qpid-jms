@@ -13,8 +13,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ 11, 17 ]
-        graal: [ 22.3 ]
+        java: [ 11 , 17 ]
+        mandrel: [ default ]
+        include:
+          - java: 20
+            mandrel: "23.0"
 
     steps:
       - uses: actions/checkout@v3
@@ -34,10 +37,6 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
 
-      - name: Pull Quarkus Native Builder Image (${{ matrix.graal }})
-        if: matrix.graal != 'none'
-        run: docker pull quay.io/quarkus/ubi-quarkus-graalvmce-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
-
       - name: Build Quarkus main
         env:
           MAVEN_PL: "., io.quarkus:quarkus-bom, io.quarkus:quarkus-core-deployment, io.quarkus:quarkus-arc-deployment, io.quarkus:quarkus-netty-deployment, io.quarkus:quarkus-extension-processor, io.quarkus:quarkus-bootstrap-bom, io.quarkus:quarkus-bootstrap-bom-test, io.quarkus:quarkus-extension-maven-plugin, io.quarkus:quarkus-maven-plugin, io.quarkus:quarkus-resteasy-reactive-deployment, io.quarkus:quarkus-jms-spi-deployment, io.quarkus:quarkus-junit5"
@@ -48,6 +47,10 @@ jobs:
       - name: Build - JVM
         run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT
 
-      - name: Build - Native
-        if: matrix.graal != 'none'
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-graalvmce-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
+      - name: Build - Native (Default Builder Image)
+        if: matrix.mandrel == 'default'
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT
+
+      - name: Build - Native (Specific Builder Image)
+        if: matrix.mandrel != 'default'
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:${{ matrix.mandrel }}-java${{ matrix.java }}
