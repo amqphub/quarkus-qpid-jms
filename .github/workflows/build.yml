@@ -16,7 +16,10 @@ jobs:
       fail-fast: false
       matrix:
         java: [ 11 , 17 ]
-        graal: [ 22.3 ]
+        mandrel: [ default ]
+        include:
+          - java: 17
+            mandrel: "22.3"
 
     steps:
       - uses: actions/checkout@v3
@@ -33,13 +36,13 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
 
-      - name: Pull Quarkus Native Builder Image (${{ matrix.graal }})
-        if: matrix.graal != 'none'
-        run: docker pull quay.io/quarkus/ubi-quarkus-graalvmce-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
-
       - name: Build - JVM
         run: mvn -B clean verify
 
-      - name: Build - Native
-        if: matrix.graal != 'none'
-        run: mvn -B clean verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-graalvmce-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
+      - name: Build - Native (Default Builder Image)
+        if: matrix.mandrel == 'default'
+        run: mvn -B clean verify -Dnative
+
+      - name: Build - Native (Specific Builder Image)
+        if: matrix.mandrel != 'default'
+        run: mvn -B clean verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:${{ matrix.mandrel }}-java${{ matrix.java }}
