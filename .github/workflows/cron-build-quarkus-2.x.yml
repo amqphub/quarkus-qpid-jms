@@ -47,9 +47,12 @@ jobs:
           git clone --depth 1 --branch 2.16 https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
           mvn -B -s ../.github/cron-maven-settings.xml clean install -DskipTests -DskipITs -Dformat.skip -DskipDocs -am -pl "${MAVEN_PL}"
 
+      - name: Build - JVM
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=2.16.999-SNAPSHOT
+
       - name: Build - Native (Default Builder Image)
         if: matrix.mandrel == 'default'
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=2.16.999-SNAPSHOT
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=2.16.999-SNAPSHOT -Dnative
 
       - name: Build - Native (Specific Builder Image)
         if: matrix.mandrel != 'default'

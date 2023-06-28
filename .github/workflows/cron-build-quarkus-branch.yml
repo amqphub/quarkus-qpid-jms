@@ -49,7 +49,7 @@ jobs:
 
       - name: Build - Native (Default Builder Image)
         if: matrix.mandrel == 'default'
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT -Dnative
 
       - name: Build - Native (Specific Builder Image)
         if: matrix.mandrel != 'default'
