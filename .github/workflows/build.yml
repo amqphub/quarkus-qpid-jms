@@ -15,11 +15,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ 11 , 17 ]
+        java: [ 11 , 17 , 21 ]
         mandrel: [ default ]
         include:
-          - java: 20
-            mandrel: "23.0"
+          - java: 17
+            mandrel: "17"
 
     steps:
       - uses: actions/checkout@v3
@@ -45,4 +45,4 @@ jobs:
 
       - name: Build - Native (Specific Builder Image)
         if: matrix.mandrel != 'default'
-        run: mvn -B clean verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:${{ matrix.mandrel }}-java${{ matrix.java }}
+        run: mvn -B clean verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-${{ matrix.mandrel }}
