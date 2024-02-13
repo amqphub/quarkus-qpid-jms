@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     if: github.repository == 'amqphub/quarkus-qpid-jms' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
@@ -20,8 +20,8 @@ jobs:
             mandrel: "17"
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.m2/repository/*/*
@@ -32,7 +32,7 @@ jobs:
             ${{ runner.os }}-maven
 
       - name: Install JDK ${{ matrix.java }}
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
