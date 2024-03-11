@@ -15,9 +15,6 @@ jobs:
       matrix:
         java: [ 17 , 21 ]
         mandrel: [ default ]
-        include:
-          - java: 17
-            mandrel: "17"
 
     steps:
       - uses: actions/checkout@v4
