@@ -64,7 +64,7 @@
     <url>https://github.com/amqphub/quarkus-qpid-jms</url>
     <connection>scm:git:https://github.com/amqphub/quarkus-qpid-jms.git</connection>
     <developerConnection>scm:git:https://github.com/amqphub/quarkus-qpid-jms.git</developerConnection>
-    <tag>2.6.1</tag>
+    <tag>2.6.x</tag>
   </scm>
 
   <distributionManagement>
