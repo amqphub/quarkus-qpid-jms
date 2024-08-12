@@ -35,10 +35,10 @@ public class QpidJmsProducer {
     @ApplicationScoped
     @DefaultBean
     public ConnectionFactory connectionFactory() {
-        ConnectionFactory connectionFactory = new JmsConnectionFactory(config.username.orElse(null), config.password.orElse(null), config.url);
+        ConnectionFactory connectionFactory = new JmsConnectionFactory(config.username().orElse(null), config.password().orElse(null), config.url());
         ConnectionFactoryWrapper wrapper = Arc.container().instance(ConnectionFactoryWrapper.class).get();
 
-        if (config.wrap && wrapper != null) {
+        if (config.wrap() && wrapper != null) {
             return wrapper.wrap(connectionFactory);
         } else {
             return connectionFactory;

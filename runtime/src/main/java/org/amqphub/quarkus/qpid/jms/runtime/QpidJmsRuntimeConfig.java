@@ -17,37 +17,37 @@ package org.amqphub.quarkus.qpid.jms.runtime;
 
 import java.util.Optional;
 
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefault;
 
-@ConfigRoot(name = "qpid-jms", phase = ConfigPhase.RUN_TIME)
-public class QpidJmsRuntimeConfig {
+@ConfigMapping(prefix = "quarkus.qpid-jms")
+@ConfigRoot(phase = ConfigPhase.RUN_TIME)
+public interface QpidJmsRuntimeConfig {
 
-   public static final String DEFAULT_URL = "amqp://localhost:5672";
+   String DEFAULT_URL = "amqp://localhost:5672";
 
     /**
      * Connection URL for the factory
      */
-    @ConfigItem(defaultValue = DEFAULT_URL)
-    public String url;
+    @WithDefault(DEFAULT_URL)
+    String url();
 
     /**
      * Username to optionally be set on the factory
      */
-    @ConfigItem
-    public Optional<String> username;
+    Optional<String> username();
 
     /**
      * Password to optionally be set on the factory
      */
-    @ConfigItem
-    public Optional<String> password;
+    Optional<String> password();
 
     /**
      * Whether to wrap a ConnectionFactory by ConnectionFactoryWrapper which could be introduced by other extensions,
      * such as quarkus-pooled-jms to provide pooling capability
      */
-    @ConfigItem(defaultValue = "false")
-    public boolean wrap;
+    @WithDefault("false")
+    boolean wrap();
 }
