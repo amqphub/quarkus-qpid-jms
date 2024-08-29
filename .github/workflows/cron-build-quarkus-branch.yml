@@ -43,12 +43,12 @@ jobs:
           ./mvnw -B -s ../.github/cron-maven-settings.xml -f relocations/pom.xml clean install
 
       - name: Build - JVM
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=3.14.999-SNAPSHOT
 
       - name: Build - Native (Default Builder Image)
         if: matrix.mandrel == 'default'
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT -Dnative
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=3.14.999-SNAPSHOT -Dnative
 
       - name: Build - Native (Specific Builder Image)
         if: matrix.mandrel != 'default'
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-${{ matrix.mandrel }}
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=3.14.999-SNAPSHOT -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-${{ matrix.mandrel }}
