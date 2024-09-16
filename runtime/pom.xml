@@ -82,13 +82,6 @@
       </exclusions>
     </dependency>
 
-    <!-- Needed because quarkus-netty needs it present if netty-codec-http 
-      is already present on the classpath, which it is for client -->
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-codec-http2</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>org.graalvm.sdk</groupId>
       <artifactId>nativeimage</artifactId>
