@@ -40,11 +40,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.amqphub.quarkus</groupId>
-      <artifactId>quarkus-qpid-jms</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-core-deployment</artifactId>
     </dependency>
@@ -59,6 +54,10 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-netty-deployment</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.amqphub.quarkus</groupId>
+      <artifactId>quarkus-qpid-jms</artifactId>
     </dependency>
   </dependencies>
 
