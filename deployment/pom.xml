@@ -60,12 +60,6 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-netty-deployment</artifactId>
     </dependency>
-    <!-- Needed because quarkus-netty[-deployment] needs it present if netty-codec-http 
-      is already present on the classpath, which it is for client -->
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-codec-http2</artifactId>
-    </dependency>
   </dependencies>
 
   <build>
