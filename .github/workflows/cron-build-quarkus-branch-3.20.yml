@@ -1,4 +1,4 @@
-name: "Cron Build With Quarkus Branch"
+name: "Cron Build With Quarkus Branch - 3.20.x"
 
 on:
   schedule:
@@ -23,9 +23,9 @@ jobs:
           path: |
             ~/.m2/repository/*/*
             !~/.m2/repository/io/quarkus
-          key: ${{ runner.os }}-cron-maven-quarkus-branch-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-cron-maven-quarkus-3.20-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-cron-maven-quarkus-branch-
+            ${{ runner.os }}-cron-maven-quarkus-3.20-
 
       - name: Install JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
@@ -33,21 +33,21 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
 
-      - name: Build Quarkus 3.21.x-SNAPSHOT
+      - name: Build Quarkus 3.20.x-SNAPSHOT
         env:
           MAVEN_PL: "., io.quarkus:quarkus-bom, io.quarkus:quarkus-core-deployment, io.quarkus:quarkus-arc-deployment, io.quarkus:quarkus-netty-deployment, io.quarkus:quarkus-extension-processor, io.quarkus:quarkus-bootstrap-bom, io.quarkus:quarkus-bootstrap-bom-test, io.quarkus:quarkus-extension-maven-plugin, io.quarkus:quarkus-maven-plugin, io.quarkus:quarkus-rest-deployment, io.quarkus:quarkus-jms-spi-deployment, io.quarkus:quarkus-junit5"
         run: |
-          git clone --depth 1 --branch 3.21 https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
+          git clone --depth 1 --branch 3.20 https://github.com/quarkusio/quarkus.git && cd quarkus && echo "Current Quarkus commit:" $(git rev-parse HEAD)
           ./mvnw -B -s ../.github/cron-maven-settings.xml clean install -DskipTests -DskipITs -Dno-test-modules -Dformat.skip -DskipDocs -am -pl "${MAVEN_PL}"
           ./mvnw -B -s ../.github/cron-maven-settings.xml -f relocations/pom.xml clean install
 
       - name: Build - JVM
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=3.20.999-SNAPSHOT
 
       - name: Build - Native (Default Builder Image)
         if: matrix.mandrel == 'default'
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT -Dnative
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=3.20.999-SNAPSHOT -Dnative
 
       - name: Build - Native (Specific Builder Image)
         if: matrix.mandrel != 'default'
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=999-SNAPSHOT -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-${{ matrix.mandrel }}
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=3.20.999-SNAPSHOT -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-${{ matrix.mandrel }}
