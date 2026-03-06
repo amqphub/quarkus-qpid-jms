@@ -28,7 +28,7 @@
     <description>Quarkus Qpid JMS integration tests module</description>
 
     <properties>
-        <artemis-version>2.44.0</artemis-version>
+        <artemis-version>2.52.0</artemis-version>
     </properties>
 
     <dependencyManagement>
@@ -58,7 +58,7 @@
 
         <!-- Test Dependencies -->
         <dependency>
-            <groupId>org.apache.activemq</groupId>
+            <groupId>org.apache.artemis</groupId>
             <artifactId>artemis-server</artifactId>
             <version>${artemis-version}</version>
             <scope>test</scope>
@@ -70,7 +70,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.apache.activemq</groupId>
+            <groupId>org.apache.artemis</groupId>
             <artifactId>artemis-amqp-protocol</artifactId>
             <version>${artemis-version}</version>
             <scope>test</scope>
