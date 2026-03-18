@@ -2,7 +2,7 @@
 
 An extension which facilitates use of the AMQP JMS client from [Apache Qpid](https://qpid.apache.org/components/jms/) as part of a [Quarkus](https://quarkus.io) application, including those using native executable builds.
 
-Use JMS APIs with AMQP 1.0 servers such as ActiveMQ Artemis, ActiveMQ 5, Qpid Broker-J, Qpid Dispatch router, Azure Service Bus, and more.
+Use JMS APIs with AMQP 1.0 servers such as Apache Artemis, Apache ActiveMQ, Apache Qpid Broker-J, Azure Service Bus, and more.
 
 ### Sample Usage
 
