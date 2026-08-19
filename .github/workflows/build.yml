@@ -3,10 +3,10 @@ name: "Build"
 on:
   push:
     paths-ignore:
-      - '.github/workflows/cron-build-*.yml'
+      - '.github/workflows/nightly-build-*.yml'
   pull_request:
     paths-ignore:
-      - '.github/workflows/cron-build-*.yml'
+      - '.github/workflows/nightly-build-*.yml'
   workflow_dispatch:
 
 jobs:
