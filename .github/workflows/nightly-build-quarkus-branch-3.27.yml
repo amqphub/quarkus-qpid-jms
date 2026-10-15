@@ -44,13 +44,18 @@ jobs:
           ./mvnw -B -s ../.github/cron-maven-settings.xml clean install -DskipTests -DskipITs -Dno-test-modules -Dformat.skip -DskipDocs -am -pl "${MAVEN_PL}"
           ./mvnw -B -s ../.github/cron-maven-settings.xml -f relocations/pom.xml clean install
 
+      - name: Update Quarkus Version Property
+        run: |
+          sed -i "s~<quarkus-version>[^<]*~<quarkus-version>3.27.999-SNAPSHOT~g" ./pom.xml
+          git diff
+
       - name: Build - JVM
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=3.27.999-SNAPSHOT
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify
 
       - name: Build - Native (Default Builder Image)
         if: matrix.mandrel == 'default'
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=3.27.999-SNAPSHOT -Dnative
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dnative
 
       - name: Build - Native (Specific Builder Image)
         if: matrix.mandrel != 'default'
-        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dquarkus-version=3.27.999-SNAPSHOT -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-${{ matrix.mandrel }}
+        run: mvn -B -s .github/cron-maven-settings.xml clean verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-${{ matrix.mandrel }}
