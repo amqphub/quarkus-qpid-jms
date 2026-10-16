@@ -16,49 +16,64 @@
 package org.amqphub.quarkus.qpid.jms.it;
 
 import static org.amqphub.quarkus.qpid.jms.it.QpidJmsTestSupport.ENDPOINT_PATH;
+import static org.amqphub.quarkus.qpid.jms.it.QpidJmsTestSupport.SERVER_PORT;
 
-import org.amqphub.quarkus.qpid.jms.it.artemis.BrokerTestResource;
-
-import jakarta.jms.JMSContext;
-import jakarta.jms.JMSProducer;
-import jakarta.jms.Queue;
 import jakarta.ws.rs.core.Response.Status;
 
+import org.apache.qpid.protonj2.test.driver.ProtonTestServer;
+import org.apache.qpid.protonj2.test.driver.ProtonTestServerOptions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
 @QuarkusTest
-@QuarkusTestResource(BrokerTestResource.class)
 public class QpidJmsReceiveTest {
 
     /**
      * Tests that receiving works in the {@link QpidJmsReceive} application code
-     * using the extension, by sending a message to the broker and using the
-     * {@link QpidJmsEndpoint} to trigger the app receiving it from the broker
-     * and returning the body, finally comparing the response to that we sent.
+     * using the extension, by using a GET from the {@link QpidJmsEndpoint} to trigger
+     * the app receiving a message from the test peer and returning its body,
+     * finally comparing the response to the body sent by the peer.
      *
      * @throws Exception
      *             if there is an unexpected problem
      */
     @Test
     public void testReceive() throws Exception {
-        String body = QpidJmsTestSupport.generateBody();
+        final String body = QpidJmsTestSupport.generateBody();
 
-        try (JMSContext context = QpidJmsTestSupport.createContext()) {
-            Queue destination = context.createQueue(QpidJmsReceive.QUEUE_NAME);
-            JMSProducer producer = context.createProducer();
+        try (ProtonTestServer peer = new ProtonTestServer(new ProtonTestServerOptions().setServerPort(SERVER_PORT))) {
+            peer.expectSASLAnonymousConnect();
+            peer.expectOpen().respond();
+            peer.expectBegin().respond();
+            peer.expectBegin().respond();
+            peer.expectAttach().ofReceiver().withSource().withAddress(QpidJmsReceive.QUEUE_NAME).also().respond();
+            peer.expectFlow().withLinkCredit(1000);
+            peer.remoteTransfer().withHandle(0)
+                                 .withDeliveryId(0)
+                                 .withDeliveryTag(new byte[] { 1 })
+                                 .withMore(false)
+                                 .withMessageFormat(0)
+                                 .withMessage().withBody().withString(body)
+                                 .also()
+                                 .queue();
+            peer.expectDisposition().withFirst(0)
+                                    .withSettled(true)
+                                    .withState().accepted();
+            peer.expectEnd().respond();
+            peer.expectClose().respond();
 
-            producer.send(destination, body);
+            peer.start();
+
+            Response response = RestAssured.get(ENDPOINT_PATH);
+            Assertions.assertEquals(Status.OK.getStatusCode(), response.statusCode());
+
+            Assertions.assertEquals(body, response.getBody().asString(), "Received body did not match that sent by peer");
+
+            peer.waitForScriptToComplete();
         }
-
-        Response response = RestAssured.with().body(body).get(ENDPOINT_PATH);
-        Assertions.assertEquals(Status.OK.getStatusCode(), response.statusCode());
-
-        Assertions.assertEquals(body, response.getBody().asString(), "Received body did not match that sent");
     }
 }

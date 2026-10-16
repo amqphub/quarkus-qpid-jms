@@ -28,7 +28,7 @@
     <description>Quarkus Qpid JMS integration tests module</description>
 
     <properties>
-        <artemis-version>2.57.0</artemis-version>
+        <protonj2-version>1.4.0</protonj2-version>
     </properties>
 
     <dependencyManagement>
@@ -58,35 +58,6 @@
 
         <!-- Test Dependencies -->
         <dependency>
-            <groupId>org.apache.artemis</groupId>
-            <artifactId>artemis-server</artifactId>
-            <version>${artemis-version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.artemis</groupId>
-            <artifactId>artemis-amqp-protocol</artifactId>
-            <version>${artemis-version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-test-common</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit</artifactId>
             <scope>test</scope>
@@ -94,6 +65,12 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.qpid</groupId>
+            <artifactId>protonj2-test-driver</artifactId>
+            <version>${protonj2-version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

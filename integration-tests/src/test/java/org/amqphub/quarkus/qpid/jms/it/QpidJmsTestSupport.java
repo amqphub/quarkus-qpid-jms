@@ -35,6 +35,8 @@ public class QpidJmsTestSupport {
      */
     public static final String CONNECTION_URL = "amqp://localhost:15672";
 
+    public static final int SERVER_PORT = 15672;
+
     public static JMSContext createContext() throws JMSException {
         JmsConnectionFactory jmsConnectionFactory = new JmsConnectionFactory(CONNECTION_URL);
 

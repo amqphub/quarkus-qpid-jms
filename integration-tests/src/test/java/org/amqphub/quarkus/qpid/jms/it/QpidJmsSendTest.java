@@ -16,47 +16,63 @@
 package org.amqphub.quarkus.qpid.jms.it;
 
 import static org.amqphub.quarkus.qpid.jms.it.QpidJmsTestSupport.ENDPOINT_PATH;
+import static org.amqphub.quarkus.qpid.jms.it.QpidJmsTestSupport.SERVER_PORT;
 
-import org.amqphub.quarkus.qpid.jms.it.artemis.BrokerTestResource;
+import java.util.concurrent.TimeUnit;
 
-import jakarta.jms.JMSConsumer;
-import jakarta.jms.JMSContext;
-import jakarta.jms.Queue;
 import jakarta.ws.rs.core.Response.Status;
 
+import org.apache.qpid.protonj2.test.driver.ProtonTestServer;
+import org.apache.qpid.protonj2.test.driver.ProtonTestServerOptions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
 @QuarkusTest
-@QuarkusTestResource(BrokerTestResource.class)
 public class QpidJmsSendTest {
 
     /**
-     * Tests that sending works in the {@link QpidJmsSend} application code
-     * using the extension, by using the {@link QpidJmsEndpoint} server to
-     * post a message and trigger the app sending it to the broker, where we
-     * then receive the message from and compare the body with what we posted.
+     * Tests that sending works in the {@link QpidJmsSend} application code using
+     * the extension, by doing a POST to the {@link QpidJmsEndpoint} to trigger
+     * the app sending a message to the test peer with the POSTed value as its body
+     * which the peer will verify.
      *
      * @throws Exception
      *             if there is an unexpected problem
      */
     @Test
     public void testSend() throws Exception {
-        String body = QpidJmsTestSupport.generateBody();
+        final String body = QpidJmsTestSupport.generateBody();
 
-        Response response = RestAssured.with().body(body).post(ENDPOINT_PATH);
-        Assertions.assertEquals(Status.NO_CONTENT.getStatusCode(), response.statusCode());
+        try (ProtonTestServer peer = new ProtonTestServer(new ProtonTestServerOptions().setServerPort(SERVER_PORT))) {
+            peer.expectSASLAnonymousConnect();
+            peer.expectOpen().respond();
+            peer.expectBegin().respond();
+            peer.expectBegin().respond();
+            peer.expectAttach().ofSender().respond();
+            peer.remoteFlow().withDeliveryCount(0)
+                             .withLinkCredit(10)
+                             .withIncomingWindow(1024)
+                             .withOutgoingWindow(10)
+                             .withNextIncomingId(0)
+                             .withNextOutgoingId(1).queue();
+            peer.expectTransfer().withMessage().withHeader().withDurability(true).also()
+                                               .withProperties().withTo(QpidJmsSend.QUEUE_NAME).also()
+                                               .withMessageAnnotations().also()
+                                               .withValue(body).also()
+                                               .accept();
+            peer.expectEnd().respond();
+            peer.expectClose().respond();
 
-        try (JMSContext context = QpidJmsTestSupport.createContext()) {
-            Queue destination = context.createQueue(QpidJmsSend.QUEUE_NAME);
-            JMSConsumer consumer = context.createConsumer(destination);
+            peer.start();
 
-            Assertions.assertEquals(body, consumer.receiveBody(String.class, 2000L), "Received body did not match that sent");
+            Response response = RestAssured.with().body(body).post(ENDPOINT_PATH);
+            Assertions.assertEquals(Status.NO_CONTENT.getStatusCode(), response.statusCode());
+
+            peer.waitForScriptToComplete(5, TimeUnit.SECONDS);
         }
     }
 }
