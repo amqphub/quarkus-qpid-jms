@@ -55,6 +55,7 @@ import org.apache.qpid.jms.transports.netty.NettyWsTransportFactory;
 import org.apache.qpid.jms.transports.netty.NettyWssTransportFactory;
 import org.apache.qpid.proton.engine.impl.TransportImpl;
 
+import io.quarkiverse.jms.spi.deployment.ConnectionFactoryWrapperBuildItem;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
@@ -68,7 +69,6 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedClassBuildItem;
-import io.quarkus.jms.spi.deployment.ConnectionFactoryWrapperBuildItem;
 
 import java.util.Optional;
 import java.util.function.Function;
